@@ -17,6 +17,8 @@ import {
   EyeOff,
 } from 'lucide-react';
 import { StockMovementType, Product } from '../../types';
+import { firebaseStorage } from '../../services/firebase';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 export const InventoryManager: React.FC = () => {
   const { products, stockMovements, recordStockAdjustment, saveProduct, addToast } = useApp();
@@ -33,6 +35,8 @@ export const InventoryManager: React.FC = () => {
   const [notes, setNotes] = useState('');
   const [imageProduct, setImageProduct] = useState<Product | null>(null);
   const [imagePreview, setImagePreview] = useState('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
 
   const handleOpenAdjustment = (prod: Product, defaultType: StockMovementType = 'STOCK_IN') => {
     setSelectedProduct(prod);
@@ -70,17 +74,33 @@ export const InventoryManager: React.FC = () => {
       addToast('error', 'Gambar Terlalu Besar', 'Ukuran gambar maksimal 2 MB.');
       return;
     }
+    setImageFile(file);
     const reader = new FileReader();
     reader.onload = () => setImagePreview(String(reader.result || ''));
     reader.readAsDataURL(file);
   };
 
-  const saveProductImage = () => {
-    if (!imageProduct || !imagePreview) return;
-    saveProduct({ ...imageProduct, image: imagePreview });
-    setImageProduct(null);
-    setImagePreview('');
-    addToast('success', 'Gambar Produk Disimpan', 'Gambar langsung digunakan pada katalog publik.');
+  const saveProductImage = async () => {
+    if (!imageProduct || (!imageFile && !imagePreview)) return;
+    setIsUploadingImage(true);
+    try {
+      let imageUrl = imagePreview;
+      if (imageFile) {
+        const safeName = imageFile.name.replace(/[^a-zA-Z0-9._-]/g, '-');
+        const storageRef = ref(firebaseStorage, `products/${imageProduct.id}/${Date.now()}-${safeName}`);
+        await uploadBytes(storageRef, imageFile, { contentType: imageFile.type });
+        imageUrl = await getDownloadURL(storageRef);
+      }
+      saveProduct({ ...imageProduct, image: imageUrl });
+      setImageProduct(null);
+      setImagePreview('');
+      setImageFile(null);
+      addToast('success', 'Gambar Produk Disimpan', 'Gambar tersimpan di Firebase Storage dan langsung dipakai katalog publik.');
+    } catch (err: any) {
+      addToast('error', 'Upload Gambar Gagal', err?.message || 'Periksa konfigurasi Firebase Storage.');
+    } finally {
+      setIsUploadingImage(false);
+    }
   };
 
   const togglePublicCatalog = (product: Product) => {
@@ -351,7 +371,7 @@ export const InventoryManager: React.FC = () => {
           <div className="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-slate-200 overflow-hidden">
             <div className="p-5 border-b border-slate-100 flex items-center justify-between">
               <div><span className="text-[10px] font-bold uppercase tracking-wider text-amber-600">Gambar Katalog Public</span><h3 className="font-extrabold text-base text-slate-900">{imageProduct.name}</h3></div>
-              <button onClick={() => { setImageProduct(null); setImagePreview(''); }} className="p-1.5 rounded-full hover:bg-slate-100"><X className="w-5 h-5" /></button>
+              <button onClick={() => { setImageProduct(null); setImagePreview(''); setImageFile(null); }} className="p-1.5 rounded-full hover:bg-slate-100"><X className="w-5 h-5" /></button>
             </div>
             <div className="p-6 space-y-4">
               <div className="aspect-video rounded-2xl bg-slate-50 border border-dashed border-slate-300 overflow-hidden flex items-center justify-center">
@@ -364,7 +384,7 @@ export const InventoryManager: React.FC = () => {
               <p className="text-[11px] text-slate-500">Gambar yang disimpan di Stock otomatis dipakai pada katalog produk website publik.</p>
               <div className="flex justify-end gap-2 pt-2">
                 <button onClick={() => { setImageProduct(null); setImagePreview(''); }} className="px-4 py-2 rounded-xl bg-slate-100 text-xs font-bold">Batal</button>
-                <button disabled={!imagePreview} onClick={saveProductImage} className="px-4 py-2 rounded-xl bg-amber-600 disabled:bg-slate-300 text-white text-xs font-bold">Simpan Gambar</button>
+                <button disabled={!imagePreview || isUploadingImage} onClick={saveProductImage} className="px-4 py-2 rounded-xl bg-amber-600 disabled:bg-slate-300 text-white text-xs font-bold">{isUploadingImage ? 'Mengupload...' : 'Simpan Gambar'}</button>
               </div>
             </div>
           </div>
