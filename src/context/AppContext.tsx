@@ -217,7 +217,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Admin/cashier usernames map to Firebase Auth emails: <username>@afterproject.local.
   const login = async (username: string, pinOrPass: string): Promise<boolean> => {
-    const normalizedUsername = username.trim().toLowerCase();
+    const normalizedLogin = username.trim().toLowerCase();
+    const normalizedUsername = normalizedLogin.endsWith('@afterproject.local')
+      ? normalizedLogin.slice(0, -'@afterproject.local'.length)
+      : normalizedLogin;
     const foundUser = users.find(
       (u) => u.username.toLowerCase() === normalizedUsername && u.active
     );
