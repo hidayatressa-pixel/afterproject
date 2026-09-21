@@ -1,27 +1,19 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
-import { Lock, X, KeyRound, ShieldAlert, ArrowRight, UserCheck, Sparkles } from 'lucide-react';
+import { Lock, X, KeyRound, ShieldAlert, ArrowRight } from 'lucide-react';
 import { BrandLogo } from './BrandLogo';
 
 export const AdminLoginModal: React.FC = () => {
   const { isAdminLoginOpen, setIsAdminLoginOpen, login } = useApp();
 
-  const [username, setUsername] = useState('admin');
-  const [password, setPassword] = useState('admin123');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   if (!isAdminLoginOpen) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     login(username, password);
-  };
-
-  const handleQuickLogin = (role: 'admin' | 'kasir') => {
-    if (role === 'admin') {
-      login('admin', 'admin123');
-    } else {
-      login('kasir', 'kasir123');
-    }
   };
 
   return (
@@ -82,32 +74,6 @@ export const AdminLoginModal: React.FC = () => {
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>
-
-          {/* Quick Demo Access Buttons */}
-          <div className="pt-3 border-t border-slate-100 space-y-2">
-            <div className="flex items-center gap-1.5 text-slate-400 text-[11px] font-semibold">
-              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-              <span>Akses Cepat Pengujian:</span>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('admin')}
-                className="p-2.5 rounded-xl bg-slate-100 hover:bg-amber-50 hover:text-amber-900 border border-slate-200 text-left transition-colors"
-              >
-                <span className="font-bold text-slate-900 block text-xs">Role: Owner / Admin</span>
-                <span className="text-[10px] text-slate-500 font-mono">admin / admin123</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('kasir')}
-                className="p-2.5 rounded-xl bg-slate-100 hover:bg-amber-50 hover:text-amber-900 border border-slate-200 text-left transition-colors"
-              >
-                <span className="font-bold text-slate-900 block text-xs">Role: Kasir POS</span>
-                <span className="text-[10px] text-slate-500 font-mono">kasir / kasir123</span>
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </div>
