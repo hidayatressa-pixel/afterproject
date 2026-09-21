@@ -67,7 +67,7 @@ export const ContactSection: React.FC = () => {
           {/* Left Column: Contact Cards & Operating Hours */}
           <div className="lg:col-span-5 space-y-6">
             {/* Info Cards */}
-            <div className="bg-slate-50 rounded-3xl border border-slate-200 p-6 space-y-4">
+            <div className="bg-slate-50 rounded-2xl border border-slate-200 p-6 space-y-4">
               <div className="flex items-start gap-3.5">
                 <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-500/20">
                   <MessageCircle className="w-5 h-5" />
@@ -140,7 +140,7 @@ export const ContactSection: React.FC = () => {
               </div>
               <div className="h-52 bg-slate-200 relative flex flex-col items-center justify-center text-slate-500 p-6 text-center">
                 <div className="w-12 h-12 rounded-full bg-amber-500 text-white flex items-center justify-center shadow-lg mb-2">
-                  <MapPin className="w-6 h-6 animate-bounce" />
+                  <MapPin className="w-6 h-6" />
                 </div>
                 <p className="text-xs font-bold text-slate-800">
                   AFTER PROJECT
@@ -148,7 +148,7 @@ export const ContactSection: React.FC = () => {
                 <p className="text-[11px] text-slate-500 max-w-xs mt-0.5">
                   {activeAddress}{websiteContent.city ? `, ${websiteContent.city}` : ''}
                 </p>
-                <span className="mt-2 text-[10px] bg-white/90 px-3 py-1 rounded-full text-slate-700 font-mono shadow-2xs">
+                <span className="mt-2 text-[10px] bg-white/90 px-3 py-1 rounded-full text-slate-700 font-mono shadow-sm">
                   Area Strategis & Mudah Ditemukan
                 </span>
               </div>
