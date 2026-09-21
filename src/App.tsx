@@ -38,7 +38,17 @@ import { ReceiptModal } from './components/common/ReceiptModal';
 import { ToastContainer } from './components/common/ToastContainer';
 
 const AdminRouter: React.FC = () => {
-  const { adminTab } = useApp();
+  const { adminTab, currentUser, setAdminTab } = useApp();
+
+  const cashierTabs = new Set(['dashboard', 'pos', 'sales', 'customers']);
+  if (!currentUser) {
+    return <DashboardHome />;
+  }
+  if (currentUser.role === 'cashier' && !cashierTabs.has(adminTab)) {
+    // Defense-in-depth: a cashier cannot render owner-only modules even if state is manipulated.
+    queueMicrotask(() => setAdminTab('pos'));
+    return <PosModule />;
+  }
 
   switch (adminTab) {
     case 'dashboard':
@@ -71,11 +81,11 @@ const AdminRouter: React.FC = () => {
 };
 
 const MainApp: React.FC = () => {
-  const { currentView, activeReceiptSale, setActiveReceiptSale, settings } = useApp();
+  const { currentView, activeReceiptSale, setActiveReceiptSale, settings, currentUser } = useApp();
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 antialiased selection:bg-amber-500 selection:text-white flex flex-col font-sans">
-      {currentView === 'admin' ? (
+      {currentView === 'admin' && currentUser ? (
         <AdminLayout>
           <AdminRouter />
         </AdminLayout>
