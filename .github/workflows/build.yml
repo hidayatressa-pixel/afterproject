@@ -74,7 +74,7 @@ jobs:
         with:
           credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
 
-      - name: Deploy Firestore and Storage rules
+      - name: Deploy Firestore rules
         env:
           FIREBASE_PROJECT_ID: ${{ vars.VITE_FIREBASE_PROJECT_ID }}
         run: |
@@ -82,4 +82,4 @@ jobs:
             echo "::error::VITE_FIREBASE_PROJECT_ID repository variable is required."
             exit 1
           fi
-          npx --yes firebase-tools@latest deploy --only firestore:rules,storage --project "$FIREBASE_PROJECT_ID" --non-interactive
+          npx --yes firebase-tools@latest deploy --only firestore:rules --project "$FIREBASE_PROJECT_ID" --non-interactive
