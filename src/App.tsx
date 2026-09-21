@@ -8,11 +8,7 @@ import { MainServices } from './components/public/MainServices';
 import { ProductCatalog } from './components/public/ProductCatalog';
 import { QuickOrder } from './components/public/QuickOrder';
 import { PriceListSection } from './components/public/PriceListSection';
-import { WhyUsSection } from './components/public/WhyUsSection';
-import { UmkmSection } from './components/public/UmkmSection';
 import { DigitalSolutionsSection } from './components/public/DigitalSolutionsSection';
-import { PortfolioSection } from './components/public/PortfolioSection';
-import { AboutSection } from './components/public/AboutSection';
 import { ContactSection } from './components/public/ContactSection';
 import { Footer } from './components/public/Footer';
 import { FloatingWhatsApp } from './components/public/FloatingWhatsApp';
@@ -98,11 +94,7 @@ const MainApp: React.FC = () => {
             <ProductCatalog />
             <QuickOrder />
             <PriceListSection />
-            <WhyUsSection />
-            <UmkmSection />
             <DigitalSolutionsSection />
-            <PortfolioSection />
-            <AboutSection />
             <ContactSection />
           </main>
           <Footer />
