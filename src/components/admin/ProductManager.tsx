@@ -208,11 +208,9 @@ export const ProductManager: React.FC = () => {
           id="empty-admin-products"
           icon={<PackageOpen className="w-8 h-8" />}
           title="Belum ada produk terdaftar."
-          description="Database produk masih kosong dalam mode produksi. Silakan tambahkan produk baru atau muat data simulasi demo toko."
+          description="Belum ada produk di inventori. Tambahkan produk pertama untuk mulai mengelola stok dan penjualan."
           actionText="+ Tambah Produk Pertama"
           onAction={handleOpenCreate}
-          secondaryActionText={!isDemoMode ? 'Muat Data Demo ATK' : undefined}
-          onSecondaryAction={loadDemoData}
         />
       ) : filteredProducts.length === 0 ? (
         <div className="bg-white rounded-3xl border border-slate-200 p-8 text-center text-xs text-slate-500">
