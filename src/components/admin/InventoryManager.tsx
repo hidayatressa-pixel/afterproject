@@ -12,11 +12,14 @@ import {
   Filter,
   X,
   FileSpreadsheet,
+  ImagePlus,
+  Eye,
+  EyeOff,
 } from 'lucide-react';
 import { StockMovementType, Product } from '../../types';
 
 export const InventoryManager: React.FC = () => {
-  const { products, stockMovements, recordStockAdjustment, addToast } = useApp();
+  const { products, stockMovements, recordStockAdjustment, saveProduct, addToast } = useApp();
 
   const [activeTab, setActiveTab] = useState<'stocks' | 'movements'>('stocks');
   const [searchTerm, setSearchTerm] = useState('');
@@ -28,6 +31,8 @@ export const InventoryManager: React.FC = () => {
   const [movementType, setMovementType] = useState<StockMovementType>('STOCK_IN');
   const [qtyChange, setQtyChange] = useState<number>(10);
   const [notes, setNotes] = useState('');
+  const [imageProduct, setImageProduct] = useState<Product | null>(null);
+  const [imagePreview, setImagePreview] = useState('');
 
   const handleOpenAdjustment = (prod: Product, defaultType: StockMovementType = 'STOCK_IN') => {
     setSelectedProduct(prod);
@@ -53,6 +58,34 @@ export const InventoryManager: React.FC = () => {
     } catch (err: any) {
       addToast('error', 'Gagal Menyesuaikan Stok', err.message);
     }
+  };
+
+  const handleImageFile = (file?: File) => {
+    if (!file || !imageProduct) return;
+    if (!file.type.startsWith('image/')) {
+      addToast('error', 'File Tidak Valid', 'Pilih file gambar JPG, PNG, WEBP, atau format gambar lain.');
+      return;
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      addToast('error', 'Gambar Terlalu Besar', 'Ukuran gambar maksimal 2 MB.');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => setImagePreview(String(reader.result || ''));
+    reader.readAsDataURL(file);
+  };
+
+  const saveProductImage = () => {
+    if (!imageProduct || !imagePreview) return;
+    saveProduct({ ...imageProduct, image: imagePreview });
+    setImageProduct(null);
+    setImagePreview('');
+    addToast('success', 'Gambar Produk Disimpan', 'Gambar langsung digunakan pada katalog publik.');
+  };
+
+  const togglePublicCatalog = (product: Product) => {
+    saveProduct({ ...product, show_on_public: product.show_on_public === false });
+    addToast('success', 'Katalog Publik Diperbarui', product.show_on_public === false ? 'Produk ditampilkan di website.' : 'Produk disembunyikan dari website.');
   };
 
   const getProductName = (prodId: string) => {
@@ -133,11 +166,12 @@ export const InventoryManager: React.FC = () => {
             <table className="w-full text-left border-collapse text-xs">
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold uppercase tracking-wider text-[11px]">
-                  <th className="py-3.5 px-4">Nama Produk & SKU</th>
+                  <th className="py-3.5 px-4">Produk</th>
+                  <th className="py-3.5 px-4 text-center">Katalog Public</th>
                   <th className="py-3.5 px-4 text-center">Stok Fisik Saat Ini</th>
                   <th className="py-3.5 px-4 text-center">Batas Minimum</th>
                   <th className="py-3.5 px-4 text-center">Status Inventori</th>
-                  <th className="py-3.5 px-4 text-center">Aksi Cepat Mutasi</th>
+                  <th className="py-3.5 px-4 text-center">Gambar & Mutasi</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
@@ -147,10 +181,23 @@ export const InventoryManager: React.FC = () => {
                   return (
                     <tr key={p.id} className="hover:bg-slate-50/80 transition-colors">
                       <td className="py-3.5 px-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-11 h-11 rounded-xl bg-slate-100 border border-slate-200 overflow-hidden shrink-0 flex items-center justify-center">
+                            {p.image ? <img src={p.image} alt={p.name} className="w-full h-full object-cover" /> : <ImagePlus className="w-4 h-4 text-slate-400" />}
+                          </div>
+                          <div>
                         <div className="font-bold text-slate-900 text-sm">{p.name}</div>
                         <div className="text-[11px] text-slate-500 font-mono">
                           SKU: {p.sku} • Barcode: {p.barcode}
                         </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-3.5 px-4 text-center">
+                        <button type="button" onClick={() => togglePublicCatalog(p)} className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-xl border text-[10px] font-bold ${p.show_on_public === false ? 'bg-slate-100 text-slate-500 border-slate-200' : 'bg-emerald-50 text-emerald-700 border-emerald-200'}`}>
+                          {p.show_on_public === false ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
+                          {p.show_on_public === false ? 'Disembunyikan' : 'Tampil'}
+                        </button>
                       </td>
                       <td className="py-3.5 px-4 text-center">
                         <span className="font-mono font-extrabold text-sm text-slate-900">
@@ -176,7 +223,10 @@ export const InventoryManager: React.FC = () => {
                         )}
                       </td>
                       <td className="py-3.5 px-4 text-center">
-                        <div className="flex items-center justify-center gap-2">
+                        <div className="flex items-center justify-center gap-2 flex-wrap">
+                          <button type="button" onClick={() => { setImageProduct(p); setImagePreview(p.image || ''); }} className="px-2.5 py-1 rounded-xl bg-blue-50 hover:bg-blue-600 hover:text-white text-blue-700 font-bold text-[11px] border border-blue-200 transition-colors flex items-center gap-1">
+                            <ImagePlus className="w-3 h-3" /><span>Gambar</span>
+                          </button>
                           <button
                             type="button"
                             onClick={() => handleOpenAdjustment(p, 'STOCK_IN')}
@@ -291,6 +341,31 @@ export const InventoryManager: React.FC = () => {
                   )}
                 </tbody>
               </table>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {imageProduct && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs">
+          <div className="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-slate-200 overflow-hidden">
+            <div className="p-5 border-b border-slate-100 flex items-center justify-between">
+              <div><span className="text-[10px] font-bold uppercase tracking-wider text-amber-600">Gambar Katalog Public</span><h3 className="font-extrabold text-base text-slate-900">{imageProduct.name}</h3></div>
+              <button onClick={() => { setImageProduct(null); setImagePreview(''); }} className="p-1.5 rounded-full hover:bg-slate-100"><X className="w-5 h-5" /></button>
+            </div>
+            <div className="p-6 space-y-4">
+              <div className="aspect-video rounded-2xl bg-slate-50 border border-dashed border-slate-300 overflow-hidden flex items-center justify-center">
+                {imagePreview ? <img src={imagePreview} alt="Preview produk" className="w-full h-full object-contain" /> : <div className="text-center text-slate-400"><ImagePlus className="w-8 h-8 mx-auto mb-2" /><span className="text-xs">Belum ada gambar</span></div>}
+              </div>
+              <label className="block">
+                <span className="block text-xs font-bold text-slate-700 mb-1.5">Upload gambar produk (maks. 2 MB)</span>
+                <input type="file" accept="image/*" onChange={(e) => handleImageFile(e.target.files?.[0])} className="block w-full text-xs text-slate-600 file:mr-3 file:rounded-xl file:border-0 file:bg-slate-100 file:px-3 file:py-2 file:font-bold file:text-slate-700 hover:file:bg-slate-200" />
+              </label>
+              <p className="text-[11px] text-slate-500">Gambar yang disimpan di Stock otomatis dipakai pada katalog produk website publik.</p>
+              <div className="flex justify-end gap-2 pt-2">
+                <button onClick={() => { setImageProduct(null); setImagePreview(''); }} className="px-4 py-2 rounded-xl bg-slate-100 text-xs font-bold">Batal</button>
+                <button disabled={!imagePreview} onClick={saveProductImage} className="px-4 py-2 rounded-xl bg-amber-600 disabled:bg-slate-300 text-white text-xs font-bold">Simpan Gambar</button>
+              </div>
             </div>
           </div>
         </div>
