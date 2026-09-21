@@ -16,7 +16,7 @@ import {
 import { BrandLogo } from '../common/BrandLogo';
 
 export const Footer: React.FC = () => {
-  const { websiteContent, settings, setIsAdminLoginOpen, currentUser, setCurrentView, isDemoMode, toggleDemoMode } = useApp();
+  const { websiteContent, settings, setIsAdminLoginOpen, currentUser, setCurrentView } = useApp();
 
   const activeAddress = settings?.address || websiteContent?.address || 'Jl. Raya Utama No. 45';
 
@@ -141,16 +141,6 @@ export const Footer: React.FC = () => {
                   <span>Masuk Kasir / Admin</span>
                 </button>
               )}
-            </div>
-
-            <div className="pt-2">
-              <button
-                type="button"
-                onClick={toggleDemoMode}
-                className="text-[11px] text-slate-500 hover:text-slate-300 underline"
-              >
-                Status Database: {isDemoMode ? 'Demo Mode (Sampel)' : 'Production (Bersih)'}
-              </button>
             </div>
           </div>
         </div>
