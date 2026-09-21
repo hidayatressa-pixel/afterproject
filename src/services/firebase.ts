@@ -12,16 +12,11 @@ const envConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-const fallbackConfig = {
-  apiKey: 'AIzaSyDt20Elr4JD6N6S7uaPMy18D7NXmktEuOE',
-  authDomain: 'afterweb-ba6f4.firebaseapp.com',
-  projectId: 'afterweb-ba6f4',
-  storageBucket: 'afterweb-ba6f4.firebasestorage.app',
-  messagingSenderId: '435692780334',
-  appId: '1:435692780334:web:e5249b640216d6bd3c98bf',
-};
+const firebaseConfig = envConfig;
 
-const firebaseConfig = Object.values(envConfig).every(Boolean) ? envConfig : fallbackConfig;
+if (!Object.values(firebaseConfig).every(Boolean)) {
+  console.warn('Firebase configuration is incomplete. Configure VITE_FIREBASE_* repository variables.');
+}
 
 export const firebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
 export const firestore = (() => {
@@ -35,4 +30,4 @@ export const firestore = (() => {
 })();
 export const firebaseAuth = getAuth(firebaseApp);
 export const firebaseStorage = getStorage(firebaseApp);
-export const isFirebaseConfigured = true;
+export const isFirebaseConfigured = Object.values(firebaseConfig).every(Boolean);
