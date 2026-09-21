@@ -1,0 +1,6 @@
+{
+  "name": "AFTER PROJECT - Fotocopy • Printing • ATK",
+  "description": "Solusi dokumen, percetakan, alat tulis kantor & usaha, serta layanan digital untuk pelajar, UMKM dan bisnis.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
