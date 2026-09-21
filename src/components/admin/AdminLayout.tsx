@@ -46,7 +46,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const navItems: { id: AdminTab; label: string; icon: React.FC<{ className?: string }>; badge?: string }[] = [
+  const allNavItems: { id: AdminTab; label: string; icon: React.FC<{ className?: string }>; badge?: string }[] = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'pos', label: 'Kasir (POS)', icon: ShoppingCart },
     { id: 'products', label: 'Produk ATK', icon: Package },
@@ -61,10 +61,18 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
     { id: 'settings', label: 'Pengaturan Toko', icon: Settings },
   ];
 
+  // Cashier gets only day-to-day operational screens. Owner/admin keeps full access.
+  const cashierAllowedTabs = new Set<AdminTab>(['dashboard', 'pos', 'sales', 'customers']);
+  const navItems = currentUser?.role === 'cashier'
+    ? allNavItems.filter((item) => cashierAllowedTabs.has(item.id))
+    : allNavItems;
+
+  const canManageSystem = currentUser?.role === 'admin';
+
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col antialiased text-slate-800">
       {/* Top Warning/Status Bar if in Demo Mode */}
-      {isDemoMode && (
+      {isDemoMode && canManageSystem && (
         <div className="bg-amber-600 text-white px-4 py-1 text-xs font-semibold flex items-center justify-between no-print">
           <div className="flex items-center gap-2">
             <Sparkles className="w-3.5 h-3.5" />
@@ -217,8 +225,8 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                 </button>
               )}
 
-              {/* Demo Mode Toggle */}
-              <button
+              {/* Database mode is an owner/admin control only. */}
+              {canManageSystem && <button
                 onClick={toggleDemoMode}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-colors flex items-center gap-1.5 ${
                   isDemoMode
@@ -233,7 +241,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                 />
                 <span className="hidden md:inline">Mode:</span>
                 <span>{isDemoMode ? 'Demo Aktif' : 'Production'}</span>
-              </button>
+              </button>}
             </div>
           </header>
 
