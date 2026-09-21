@@ -92,21 +92,15 @@ export const QuickOrder: React.FC = () => {
   };
 
   return (
-    <section id="kirim-file" className="py-16 md:py-24 bg-slate-900 text-white relative overflow-hidden">
-      {/* Accent Background Glow */}
-      <div className="absolute -top-24 -right-24 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+    <section id="kirim-file" className="py-16 md:py-24 bg-slate-50 text-slate-900 relative overflow-hidden">
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-          <span className="px-3.5 py-1.5 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 text-xs font-bold uppercase tracking-wider">
-            Layanan Praktis & Cepat
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight font-heading text-white">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight font-heading text-slate-950">
             Kirim File, Kami Print.
           </h2>
-          <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
+          <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
             Tidak perlu buang waktu antri di toko. Kirimkan file Anda dari rumah atau kantor via WhatsApp, kami cetak dan Anda tinggal ambil saat sudah rapi!
           </p>
         </div>
@@ -118,19 +112,19 @@ export const QuickOrder: React.FC = () => {
             return (
               <div
                 key={step.num}
-                className="relative rounded-2xl bg-slate-800/80 border border-slate-700/80 p-4 flex flex-col justify-between hover:bg-slate-800 hover:border-amber-500/50 transition-all duration-200"
+                className="relative rounded-2xl bg-white border border-slate-200 p-4 flex flex-col justify-between hover:bg-white hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
                     <span className="w-7 h-7 rounded-xl bg-amber-500 text-slate-950 font-extrabold text-xs flex items-center justify-center">
                       {step.num}
                     </span>
-                    <Icon className="w-5 h-5 text-slate-400" />
+                    <Icon className="w-5 h-5 text-slate-500" />
                   </div>
-                  <h4 className="text-sm font-bold text-white mb-1.5 leading-snug">
+                  <h4 className="text-sm font-bold text-slate-900 mb-1.5 leading-snug">
                     {step.title}
                   </h4>
-                  <p className="text-[11px] text-slate-400 leading-relaxed">
+                  <p className="text-[11px] text-slate-500 leading-relaxed">
                     {step.desc}
                   </p>
                 </div>
