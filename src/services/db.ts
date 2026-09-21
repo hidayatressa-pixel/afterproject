@@ -244,6 +244,7 @@ class DatabaseRepository {
         unit: productData.unit || 'pcs',
         description: productData.description || '',
         image: productData.image,
+        show_on_public: productData.show_on_public !== false,
         status: 'active',
         created_at: now,
         updated_at: now,
