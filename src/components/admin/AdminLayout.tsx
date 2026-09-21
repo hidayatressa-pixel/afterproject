@@ -1,30 +1,8 @@
 import React, { useState } from 'react';
-import { useApp, AdminTab } from '../../context/AppContext';
 import {
-  LayoutDashboard,
-  ShoppingCart,
-  Package,
-  FolderTree,
-  Boxes,
-  History,
-  Wrench,
-  Receipt,
-  Users,
-  Wallet,
-  FileBarChart,
-  Globe,
-  Laptop,
-  UserCheck,
-  Settings,
-  LogOut,
-  ChevronRight,
-  Menu,
-  X,
-  Store,
-  Printer,
-  Sparkles,
-  AlertTriangle,
-  ArrowLeft,
+  LayoutDashboard, ShoppingCart, Package, Boxes, Wrench, Receipt, Users,
+  Wallet, FileBarChart, Globe, Laptop, Settings, LogOut, ChevronRight,
+  Menu, X, Store, Sparkles, ArrowLeft
 } from 'lucide-react';
 import { BrandLogo } from '../common/BrandLogo';
 
@@ -101,12 +79,12 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
 
         {/* Sidebar */}
         <aside
-          className={`fixed inset-y-0 left-0 z-40 w-64 bg-slate-900 text-slate-300 flex flex-col border-r border-slate-800 transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 ${
+          className={`fixed inset-y-0 left-0 z-40 w-64 bg-white text-slate-700 flex flex-col border-r border-slate-200 transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 ${
             isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
           } no-print`}
         >
           {/* Sidebar Header */}
-          <div className="h-16 px-4 border-b border-slate-800 flex items-center justify-between">
+          <div className="h-16 px-4 border-b border-slate-200 flex items-center justify-between">
             <BrandLogo size="sm" variant="light" showSubtitle={true} />
             <button
               onClick={() => setIsSidebarOpen(false)}
@@ -130,8 +108,8 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                   }}
                   className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
                     isActive
-                      ? 'bg-amber-600 text-white shadow-xs font-bold'
-                      : 'text-slate-400 hover:text-white hover:bg-slate-800/80'
+                      ? 'bg-slate-950 text-white shadow-sm font-bold'
+                      : 'text-slate-600 hover:text-slate-950 hover:bg-slate-100'
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
@@ -145,10 +123,10 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           </div>
 
           {/* Sidebar Footer User & Back to Public */}
-          <div className="p-3 border-t border-slate-800 space-y-2 bg-slate-950/50">
+          <div className="p-3 border-t border-slate-200 space-y-2 bg-slate-50">
             <button
               onClick={() => setCurrentView('public')}
-              className="w-full py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold flex items-center justify-center gap-2 border border-slate-700 transition-colors"
+              className="w-full py-2 px-3 rounded-xl bg-white hover:bg-slate-100 text-slate-700 text-xs font-bold flex items-center justify-center gap-2 border border-slate-200 transition-colors"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Kembali ke Website Publik</span>
@@ -156,7 +134,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
 
             <div className="flex items-center justify-between pt-1 px-1 text-xs">
               <div className="flex flex-col">
-                <span className="font-bold text-white leading-tight">
+                <span className="font-bold text-slate-900 leading-tight">
                   {currentUser?.name || 'Admin'}
                 </span>
                 <span className="text-[10px] text-slate-500 capitalize">
