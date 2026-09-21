@@ -4,7 +4,6 @@ import {
   Printer,
   Copy,
   PenTool,
-  Lock,
   MessageCircle,
   MapPin,
   Clock,
@@ -16,14 +15,14 @@ import {
 import { BrandLogo } from '../common/BrandLogo';
 
 export const Footer: React.FC = () => {
-  const { websiteContent, settings, setIsAdminLoginOpen, currentUser, setCurrentView } = useApp();
+  const { websiteContent, settings } = useApp();
 
   const activeAddress = settings?.address || websiteContent?.address || 'Jl. Raya Utama No. 45';
 
   return (
     <footer className="bg-slate-950 text-slate-400 border-t border-slate-800 text-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
           {/* Col 1: Brand Info */}
           <div className="lg:col-span-2 space-y-4">
             <BrandLogo variant="light" size="lg" showSubtitle={true} />
@@ -110,38 +109,6 @@ export const Footer: React.FC = () => {
                 </a>
               </li>
             </ul>
-          </div>
-
-          {/* Col 4: Akses Khusus Kasir & Admin */}
-          <div className="space-y-3">
-            <h4 className="font-bold text-white text-sm uppercase tracking-wider font-heading">
-              Internal Toko
-            </h4>
-            <p className="text-slate-400 text-[11px] leading-relaxed">
-              Area khusus staf untuk kasir POS, manajemen stok, dan laporan keuangan toko.
-            </p>
-
-            <div className="pt-1">
-              {currentUser ? (
-                <button
-                  type="button"
-                  onClick={() => setCurrentView('admin')}
-                  className="w-full py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center justify-center gap-2 border border-slate-700 transition-colors"
-                >
-                  <Lock className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Buka Dashboard Kasir</span>
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => setIsAdminLoginOpen(true)}
-                  className="w-full py-2 px-3 rounded-xl bg-slate-800 hover:bg-amber-600 hover:text-slate-950 text-slate-200 font-bold text-xs flex items-center justify-center gap-2 border border-slate-700 transition-colors"
-                >
-                  <Lock className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Masuk Kasir / Admin</span>
-                </button>
-              )}
-            </div>
           </div>
         </div>
 
