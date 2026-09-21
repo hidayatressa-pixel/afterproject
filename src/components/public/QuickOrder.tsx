@@ -136,16 +136,16 @@ export const QuickOrder: React.FC = () => {
         {/* Two-Column Interactive Tool: Form Generator & Direct WhatsApp Action */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left: Quick Form to generate pre-filled WhatsApp message */}
-          <div className="lg:col-span-7 bg-slate-800 rounded-3xl border border-slate-700 p-6 sm:p-8 shadow-xl">
-            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-700">
-              <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
+          <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xl">
+            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-200">
+              <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-600 flex items-center justify-center">
                 <FileUp className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-white font-heading">
+                <h3 className="text-lg font-bold text-slate-900 font-heading">
                   Format Pesanan Cetak Cepat
                 </h3>
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-slate-500">
                   Isi spesifikasi di bawah, pesan rapi akan dibuatkan otomatis ke WhatsApp.
                 </p>
               </div>
@@ -154,13 +154,13 @@ export const QuickOrder: React.FC = () => {
             <form onSubmit={handleSendWhatsAppOrder} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+                  <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
                     Jenis Dokumen
                   </label>
                   <select
                     value={docType}
                     onChange={(e) => setDocType(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs font-medium focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-medium focus:ring-2 focus:ring-amber-500 focus:outline-none"
                   >
                     <option>Dokumen Tugas / Makalah</option>
                     <option>Skripsi / Laporan Akhir</option>
@@ -173,13 +173,13 @@ export const QuickOrder: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+                  <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
                     Pilihan Warna
                   </label>
                   <select
                     value={printOption}
                     onChange={(e) => setPrintOption(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs font-medium focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-medium focus:ring-2 focus:ring-amber-500 focus:outline-none"
                   >
                     <option>Hitam Putih (B/W)</option>
                     <option>Warna Campuran (Teks + Diagram)</option>
@@ -190,13 +190,13 @@ export const QuickOrder: React.FC = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+                  <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
                     Ukuran Kertas
                   </label>
                   <select
                     value={paperSize}
                     onChange={(e) => setPaperSize(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs font-medium focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-medium focus:ring-2 focus:ring-amber-500 focus:outline-none"
                   >
                     <option>A4 (21 x 29.7 cm)</option>
                     <option>F4 / Folio (21.5 x 33 cm)</option>
@@ -205,7 +205,7 @@ export const QuickOrder: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+                  <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
                     Jumlah Lembar
                   </label>
                   <input
@@ -213,12 +213,12 @@ export const QuickOrder: React.FC = () => {
                     min="1"
                     value={sheetCount}
                     onChange={(e) => setSheetCount(Math.max(1, Number(e.target.value)))}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs font-medium focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-medium focus:ring-2 focus:ring-amber-500 focus:outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+                  <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
                     Rangkap (Copy)
                   </label>
                   <input
@@ -226,19 +226,19 @@ export const QuickOrder: React.FC = () => {
                     min="1"
                     value={copyCount}
                     onChange={(e) => setCopyCount(Math.max(1, Number(e.target.value)))}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs font-medium focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-medium focus:ring-2 focus:ring-amber-500 focus:outline-none"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
                   Finishing / Jilid
                 </label>
                 <select
                   value={finishing}
                   onChange={(e) => setFinishing(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs font-medium focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-medium focus:ring-2 focus:ring-amber-500 focus:outline-none"
                 >
                   <option>Tanpa Finishing (Staples saja)</option>
                   <option>Jilid Lakban & Mika Transparan</option>
@@ -249,7 +249,7 @@ export const QuickOrder: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
                   Catatan Tambahan (Opsional)
                 </label>
                 <input
@@ -257,7 +257,7 @@ export const QuickOrder: React.FC = () => {
                   value={customNote}
                   onChange={(e) => setCustomNote(e.target.value)}
                   placeholder="Contoh: Halaman 1-5 warna, selebihnya hitam putih"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs placeholder-slate-500 focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs placeholder-slate-500 focus:ring-2 focus:ring-amber-500 focus:outline-none"
                 />
               </div>
 
@@ -275,39 +275,39 @@ export const QuickOrder: React.FC = () => {
 
           {/* Right: Direct Quick Help Card */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="bg-slate-800/90 rounded-3xl border border-slate-700 p-6 sm:p-7 space-y-5">
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-7 space-y-5">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
                   <MessageCircle className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-base font-bold text-white font-heading">
+                  <h4 className="text-base font-bold text-slate-900 font-heading">
                     Atau Langsung Chat WA Kami
                   </h4>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-slate-500">
                     Bebas kirim file langsung tanpa formulir
                   </p>
                 </div>
               </div>
 
-              <p className="text-xs text-slate-300 leading-relaxed">
+              <p className="text-xs text-slate-700 leading-relaxed">
                 Anda juga bisa langsung mengirimkan file dokumen Anda melalui lampiran WhatsApp ke nomor resmi AFTER PROJECT. Tim kami siap merespons dengan cepat.
               </p>
 
-              <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-700 space-y-2 text-xs">
-                <div className="flex items-center justify-between text-slate-300">
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 text-xs">
+                <div className="flex items-center justify-between text-slate-700">
                   <span>Nomor WhatsApp:</span>
-                  <span className="font-mono font-bold text-amber-300">
+                  <span className="font-mono font-bold text-amber-700">
                     {settings.phone || websiteContent.phone_number || '-'}
                   </span>
                 </div>
-                <div className="flex items-center justify-between text-slate-300">
+                <div className="flex items-center justify-between text-slate-700">
                   <span>Format yang Diterima:</span>
-                  <span className="font-semibold text-white">PDF, Word, JPG, Excel</span>
+                  <span className="font-semibold text-slate-900">PDF, Word, JPG, Excel</span>
                 </div>
-                <div className="flex items-center justify-between text-slate-300">
+                <div className="flex items-center justify-between text-slate-700">
                   <span>Jam Operasional:</span>
-                  <span className="text-slate-300">{websiteContent.business_hours_weekday}</span>
+                  <span className="text-slate-700">{websiteContent.business_hours_weekday}</span>
                 </div>
               </div>
 
@@ -322,12 +322,12 @@ export const QuickOrder: React.FC = () => {
             </div>
 
             {/* Quick Tips */}
-            <div className="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-200 text-xs space-y-1.5">
-              <p className="font-bold flex items-center gap-1.5 text-amber-300">
-                <HelpCircle className="w-4 h-4 text-amber-400" />
+            <div className="p-5 rounded-2xl bg-amber-50 border border-amber-200 text-slate-700 text-xs space-y-1.5">
+              <p className="font-bold flex items-center gap-1.5 text-amber-700">
+                <HelpCircle className="w-4 h-4 text-amber-600" />
                 Tips Cetak Lebih Cepat:
               </p>
-              <p className="text-[11px] leading-relaxed text-amber-100/90">
+              <p className="text-[11px] leading-relaxed text-slate-600">
                 Untuk menghindari perubahan format atau pergeseran font, disarankan untuk mengonversi dokumen Word Anda menjadi <strong>PDF</strong> sebelum dikirim.
               </p>
             </div>
