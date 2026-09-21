@@ -680,6 +680,24 @@ class DatabaseRepository {
     return this.getState().users || [];
   }
 
+  public exportProductionState(): DatabaseState {
+    const previousMode = this.isDemo;
+    this.isDemo = false;
+    const state = this.getState();
+    this.isDemo = previousMode;
+    return state;
+  }
+
+  public importProductionState(state: DatabaseState) {
+    if (!state || !Array.isArray(state.products)) return;
+    try {
+      localStorage.setItem(STORAGE_PROD_KEY, JSON.stringify(state));
+    } catch (e) {
+      console.warn('Failed caching Firestore state locally:', e);
+    }
+    if (!this.isDemo) this.notify();
+  }
+
   // --- MAINTENANCE & UTILS ---
   public resetCurrentDatabase() {
     if (this.isDemo) {
