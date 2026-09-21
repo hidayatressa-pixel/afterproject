@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { TrendingUp, ShoppingCart, AlertTriangle, Package, Printer, Receipt, Wallet } from 'lucide-react';
+import { TrendingUp, DollarSign, ShoppingCart, AlertTriangle, Package, Printer, Receipt, Wallet } from 'lucide-react';
 import { EmptyState } from '../common/EmptyState';
 
 export const DashboardHome: React.FC = () => {
