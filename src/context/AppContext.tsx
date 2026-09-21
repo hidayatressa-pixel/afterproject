@@ -176,7 +176,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     refreshData();
     const unsubscribeLocal = dbRepository.subscribe(() => refreshData());
 
-    const cloudRef = doc(firestore, 'app_state', 'production');
+    const cloudRef = doc(firestore, 'public_state', 'production');
     let applyingRemote = false;
     const unsubscribeCloud = onSnapshot(cloudRef, (snapshot) => {
       if (!snapshot.exists()) {
