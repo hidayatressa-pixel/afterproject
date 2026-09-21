@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { dbRepository } from '../services/db';
+import { firestore } from '../services/firebase';
+import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 import {
   Product,
   Category,
@@ -170,10 +172,32 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   useEffect(() => {
     refreshData();
-    const unsubscribe = dbRepository.subscribe(() => {
-      refreshData();
+    const unsubscribeLocal = dbRepository.subscribe(() => refreshData());
+
+    const cloudRef = doc(firestore, 'app_state', 'production');
+    let applyingRemote = false;
+    const unsubscribeCloud = onSnapshot(cloudRef, (snapshot) => {
+      if (!snapshot.exists()) {
+        setDoc(cloudRef, dbRepository.exportProductionState()).catch(console.error);
+        return;
+      }
+      applyingRemote = true;
+      dbRepository.importProductionState(snapshot.data() as any);
+      applyingRemote = false;
+    }, (error) => console.warn('Firestore sync unavailable:', error));
+
+    const unsubscribeSync = dbRepository.subscribe(() => {
+      if (applyingRemote || dbRepository.getDemoMode()) return;
+      setDoc(cloudRef, dbRepository.exportProductionState()).catch((error) =>
+        console.warn('Firestore write queued/failed:', error)
+      );
     });
-    return unsubscribe;
+
+    return () => {
+      unsubscribeLocal();
+      unsubscribeCloud();
+      unsubscribeSync();
+    };
   }, [refreshData]);
 
   // Auth handler
