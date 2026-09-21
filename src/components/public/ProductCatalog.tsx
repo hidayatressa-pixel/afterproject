@@ -23,7 +23,7 @@ export const ProductCatalog: React.FC = () => {
   const [stockFilter, setStockFilter] = useState<'all' | 'in_stock' | 'low_stock'>('all');
   const [selectedProductDetail, setSelectedProductDetail] = useState<Product | null>(null);
 
-  const activeWhatsApp = settings?.whatsapp || websiteContent?.whatsapp_number || '081234567890';
+  const activeWhatsApp = settings.whatsapp || websiteContent.whatsapp_number || '';
 
   // Active products only for public catalog
   const activeProducts = useMemo(() => {
@@ -73,7 +73,7 @@ export const ProductCatalog: React.FC = () => {
   };
 
   return (
-    <section id="katalog-atk" className="py-16 md:py-24 bg-slate-50 border-b border-slate-200">
+    <section id="katalog-atk" className="pt-20 pb-24 md:pt-28 md:pb-32 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
@@ -89,7 +89,7 @@ export const ProductCatalog: React.FC = () => {
         </div>
 
         {/* Filter & Search Bar */}
-        <div className="bg-white rounded-3xl border border-slate-200/90 p-4 sm:p-6 mb-8 shadow-xs space-y-4">
+        <div className="bg-slate-50 rounded-2xl border border-slate-200 p-4 sm:p-6 mb-12 shadow-xs space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-3 sm:gap-4">
             {/* Search Input */}
             <div className="md:col-span-6 relative">
