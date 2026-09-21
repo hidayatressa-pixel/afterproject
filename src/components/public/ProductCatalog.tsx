@@ -27,7 +27,7 @@ export const ProductCatalog: React.FC = () => {
 
   // Active products only for public catalog
   const activeProducts = useMemo(() => {
-    return products.filter((p) => p.status === 'active');
+    return products.filter((p) => p.status === 'active' && p.show_on_public !== false);
   }, [products]);
 
   // Filtered products
@@ -222,12 +222,14 @@ export const ProductCatalog: React.FC = () => {
                   <div>
                     {/* Visual Product Placeholder / Image Area */}
                     <div className="w-full h-40 rounded-2xl bg-linear-to-br from-slate-100 to-slate-200 border border-slate-200/60 mb-4 flex items-center justify-center relative overflow-hidden group-hover:bg-amber-50/50 transition-colors">
-                      <div className="flex flex-col items-center justify-center text-slate-400 group-hover:text-amber-600 transition-colors">
-                        <PackageOpen className="w-10 h-10 stroke-[1.5]" />
-                        <span className="text-[10px] font-mono mt-1 font-semibold text-slate-500">
-                          {product.sku}
-                        </span>
-                      </div>
+                      {product.image ? (
+                        <img src={product.image} alt={product.name} className="w-full h-full object-cover" loading="lazy" />
+                      ) : (
+                        <div className="flex flex-col items-center justify-center text-slate-400 group-hover:text-amber-600 transition-colors">
+                          <PackageOpen className="w-10 h-10 stroke-[1.5]" />
+                          <span className="text-[10px] font-mono mt-1 font-semibold text-slate-500">{product.sku}</span>
+                        </div>
+                      )}
 
                       {/* Stock Status Badge */}
                       <div className="absolute top-2.5 right-2.5">
@@ -334,11 +336,8 @@ export const ProductCatalog: React.FC = () => {
             </div>
 
             <div className="p-6 space-y-4">
-              <div className="w-full h-44 rounded-2xl bg-slate-100 border border-slate-200 flex flex-col items-center justify-center text-slate-400">
-                <PackageOpen className="w-12 h-12 stroke-1" />
-                <span className="text-xs font-mono mt-2 font-bold text-slate-600">
-                  Barcode: {selectedProductDetail.barcode}
-                </span>
+              <div className="w-full h-44 rounded-2xl bg-slate-100 border border-slate-200 overflow-hidden flex flex-col items-center justify-center text-slate-400">
+                {selectedProductDetail.image ? <img src={selectedProductDetail.image} alt={selectedProductDetail.name} className="w-full h-full object-contain" /> : <><PackageOpen className="w-12 h-12 stroke-1" /><span className="text-xs font-mono mt-2 font-bold text-slate-600">Barcode: {selectedProductDetail.barcode}</span></>}
               </div>
 
               <div>
