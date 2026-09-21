@@ -47,7 +47,7 @@ export const PriceListSection: React.FC = () => {
   };
 
   return (
-    <section id="daftar-harga" className="py-16 md:py-24 bg-white border-b border-slate-200">
+    <section id="daftar-harga" className="pt-16 pb-24 md:pt-24 md:pb-32 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
@@ -64,7 +64,7 @@ export const PriceListSection: React.FC = () => {
 
         {/* Dynamic Category Tabs if services exist */}
         {serviceCategories.length > 0 && (
-          <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
+          <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
             <button
               onClick={() => setActiveCategory('all')}
               className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all ${
