@@ -23,6 +23,7 @@ export interface Product {
   minimum_stock: number;
   unit: string;
   image?: string;
+  show_on_public?: boolean;
   description?: string;
   status: ProductStatus;
   created_at: string;
