@@ -17,7 +17,7 @@ export const HeroSection: React.FC = () => {
   return (
     <section id="beranda" className="relative overflow-hidden bg-white">
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_80%_10%,rgba(245,158,11,.12),transparent_28%),radial-gradient(circle_at_10%_80%,rgba(15,23,42,.06),transparent_25%)]" />
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-20">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-20 md:pt-20 md:pb-28">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-bold text-slate-700">
@@ -66,7 +66,7 @@ export const HeroSection: React.FC = () => {
             <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-100 shadow-2xl shadow-slate-200/70">
               <img src={heroBannerImg} alt="After Project" className="aspect-[4/3] w-full object-cover" />
             </div>
-            <div className="absolute -bottom-5 left-5 right-5 sm:left-8 sm:right-auto sm:w-80 rounded-2xl border border-white/80 bg-white/95 backdrop-blur p-4 shadow-xl">
+            <div className="absolute -bottom-8 left-5 right-5 sm:left-8 sm:right-auto sm:w-80 rounded-2xl border border-white/80 bg-white/95 backdrop-blur p-4 shadow-xl">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center"><FileText className="w-5 h-5 text-amber-700" /></div>
                 <div>
