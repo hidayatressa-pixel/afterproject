@@ -176,29 +176,45 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     refreshData();
     const unsubscribeLocal = dbRepository.subscribe(() => refreshData());
 
-    const cloudRef = doc(firestore, 'private_state', 'production');
-    let applyingRemote = false;
-    const unsubscribeCloud = onSnapshot(cloudRef, (snapshot) => {
-      if (!snapshot.exists()) {
-        setDoc(cloudRef, dbRepository.exportProductionState()).catch(console.error);
-        return;
-      }
-      applyingRemote = true;
-      dbRepository.importProductionState(snapshot.data() as any);
-      applyingRemote = false;
-    }, (error) => console.warn('Firestore sync unavailable:', error));
+    // Operational cloud data is private. Do not attach Firestore listeners
+    // until Firebase Auth has established an authenticated session.
+    let unsubscribeCloud: (() => void) | undefined;
+    let unsubscribeSync: (() => void) | undefined;
 
-    const unsubscribeSync = dbRepository.subscribe(() => {
-      if (applyingRemote || dbRepository.getDemoMode()) return;
-      setDoc(cloudRef, dbRepository.exportProductionState()).catch((error) =>
-        console.warn('Firestore write queued/failed:', error)
-      );
+    const unsubscribeAuthSync = onAuthStateChanged(firebaseAuth, (authUser) => {
+      unsubscribeCloud?.();
+      unsubscribeSync?.();
+      unsubscribeCloud = undefined;
+      unsubscribeSync = undefined;
+
+      if (!authUser) return;
+
+      const cloudRef = doc(firestore, 'private_state', 'production');
+      let applyingRemote = false;
+
+      unsubscribeCloud = onSnapshot(cloudRef, (snapshot) => {
+        if (!snapshot.exists()) {
+          setDoc(cloudRef, dbRepository.exportProductionState()).catch(console.error);
+          return;
+        }
+        applyingRemote = true;
+        dbRepository.importProductionState(snapshot.data() as any);
+        applyingRemote = false;
+      }, (error) => console.warn('Firestore sync unavailable:', error));
+
+      unsubscribeSync = dbRepository.subscribe(() => {
+        if (applyingRemote || dbRepository.getDemoMode()) return;
+        setDoc(cloudRef, dbRepository.exportProductionState()).catch((error) =>
+          console.warn('Firestore write queued/failed:', error)
+        );
+      });
     });
 
     return () => {
       unsubscribeLocal();
-      unsubscribeCloud();
-      unsubscribeSync();
+      unsubscribeAuthSync();
+      unsubscribeCloud?.();
+      unsubscribeSync?.();
     };
   }, [refreshData]);
 
