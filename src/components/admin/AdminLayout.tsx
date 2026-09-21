@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import {
   LayoutDashboard, ShoppingCart, Package, Boxes, Wrench, Receipt, Users,
   Wallet, FileBarChart, Globe, Laptop, Settings, LogOut, ChevronRight,
-  Menu, X, Store, Sparkles, ArrowLeft
+  Menu, X, Store, ArrowLeft
 } from 'lucide-react';
 import { BrandLogo } from '../common/BrandLogo';
+import { useApp, AdminTab } from '../../context/AppContext';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -17,8 +18,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
     setCurrentView,
     currentUser,
     logout,
-    isDemoMode,
-    toggleDemoMode,
+    
     settings,
   } = useApp();
 
@@ -45,28 +45,8 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
     ? allNavItems.filter((item) => cashierAllowedTabs.has(item.id))
     : allNavItems;
 
-  const canManageSystem = currentUser?.role === 'admin';
-
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col antialiased text-slate-800">
-      {/* Top Warning/Status Bar if in Demo Mode */}
-      {isDemoMode && canManageSystem && (
-        <div className="bg-amber-600 text-white px-4 py-1 text-xs font-semibold flex items-center justify-between no-print">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>
-              <strong>DEMO MODE AKTIF:</strong> Anda sedang menggunakan data simulasi toko fotocopy. Data tidak bercampur dengan database produksi.
-            </span>
-          </div>
-          <button
-            onClick={toggleDemoMode}
-            className="px-2 py-0.5 rounded-md bg-amber-800 hover:bg-amber-900 text-white text-[11px] font-bold"
-          >
-            Beralih ke Production (Kosong)
-          </button>
-        </div>
-      )}
-
       {/* Main Admin Wrapper */}
       <div className="flex-1 flex relative overflow-hidden">
         {/* Mobile Backdrop */}
@@ -88,7 +68,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             <BrandLogo size="sm" variant="light" showSubtitle={true} />
             <button
               onClick={() => setIsSidebarOpen(false)}
-              className="lg:hidden text-slate-400 hover:text-white p-1"
+              className="lg:hidden text-slate-400 hover:text-slate-900 p-1"
             >
               <X className="w-5 h-5" />
             </button>
@@ -144,7 +124,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
               <button
                 onClick={logout}
                 title="Keluar / Logout"
-                className="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-slate-800 rounded-lg transition-colors"
+                className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
               >
                 <LogOut className="w-4 h-4" />
               </button>
@@ -196,30 +176,12 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
               {adminTab !== 'pos' && (
                 <button
                   onClick={() => setAdminTab('pos')}
-                  className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-xs transition-colors"
+                  className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-white text-xs font-bold shadow-xs transition-colors"
                 >
                   <ShoppingCart className="w-3.5 h-3.5" />
                   <span>Buka Kasir</span>
                 </button>
               )}
-
-              {/* Database mode is an owner/admin control only. */}
-              {canManageSystem && <button
-                onClick={toggleDemoMode}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-colors flex items-center gap-1.5 ${
-                  isDemoMode
-                    ? 'bg-amber-50 text-amber-900 border-amber-300 hover:bg-amber-100'
-                    : 'bg-slate-100 text-slate-600 border-slate-300 hover:bg-slate-200'
-                }`}
-              >
-                <span
-                  className={`w-2 h-2 rounded-full ${
-                    isDemoMode ? 'bg-amber-600 animate-pulse' : 'bg-slate-400'
-                  }`}
-                />
-                <span className="hidden md:inline">Mode:</span>
-                <span>{isDemoMode ? 'Demo Aktif' : 'Production'}</span>
-              </button>}
             </div>
           </header>
 
