@@ -1,15 +1,5 @@
 import React, { useMemo } from 'react';
-import { useApp } from '../../context/AppContext';
-import {
-  TrendingUp,
-  DollarSign,
-  ShoppingCart,
-  AlertTriangle,
-  Package,
-  Printer,
-  Receipt,
-  Wallet,
-} from 'lucide-react';
+import { TrendingUp, ShoppingCart, AlertTriangle, Package, Printer, Receipt, Wallet } from 'lucide-react';
 import { EmptyState } from '../common/EmptyState';
 
 export const DashboardHome: React.FC = () => {
@@ -62,7 +52,7 @@ export const DashboardHome: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Top Banner / Greeting */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-200/90 shadow-2xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200/90 shadow-sm">
         <div>
           <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 font-heading">
             Ringkasan Operasional Toko
@@ -75,7 +65,7 @@ export const DashboardHome: React.FC = () => {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setAdminTab('pos')}
-            className="px-4 py-2.5 rounded-2xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs flex items-center gap-2 shadow-xs transition-colors"
+            className="px-4 py-2.5 rounded-2xl bg-slate-950 hover:bg-slate-800 text-white font-bold text-xs flex items-center gap-2 shadow-xs transition-colors"
           >
             <ShoppingCart className="w-4 h-4" />
             <span>Buka Kasir (POS)</span>
@@ -86,7 +76,7 @@ export const DashboardHome: React.FC = () => {
       {/* KPI Cards Grid (Requirement 14) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Card 1: Pendapatan Hari Ini */}
-        <div className="bg-white rounded-3xl border border-slate-200/90 p-5 shadow-2xs">
+        <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-sm">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
               Pendapatan Hari Ini
@@ -106,7 +96,7 @@ export const DashboardHome: React.FC = () => {
         </div>
 
         {/* Card 2: Transaksi Kasir Hari Ini */}
-        <div className="bg-white rounded-3xl border border-slate-200/90 p-5 shadow-2xs">
+        <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-sm">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
               Jumlah Transaksi
@@ -126,7 +116,7 @@ export const DashboardHome: React.FC = () => {
         </div>
 
         {/* Card 3: Peringatan Stok Menipis */}
-        <div className="bg-white rounded-3xl border border-slate-200/90 p-5 shadow-2xs">
+        <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-sm">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
               Stok Perlu Restock
@@ -134,7 +124,7 @@ export const DashboardHome: React.FC = () => {
             <div
               className={`w-9 h-9 rounded-xl flex items-center justify-center ${
                 lowStockProducts.length > 0
-                  ? 'bg-rose-100 text-rose-700 animate-pulse'
+                  ? 'bg-rose-100 text-rose-700 '
                   : 'bg-slate-100 text-slate-600'
               }`}
             >
@@ -156,7 +146,7 @@ export const DashboardHome: React.FC = () => {
         </div>
 
         {/* Card 4: Estimasi Laba Bersih Operasional */}
-        <div className="bg-white rounded-3xl border border-slate-200/90 p-5 shadow-2xs">
+        <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-sm">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
               Estimasi Laba Operasional
@@ -183,7 +173,7 @@ export const DashboardHome: React.FC = () => {
       {/* Two Column Section: Recent Transactions & Low Stock Alerts */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column: Recent Sales Transactions */}
-        <div className="lg:col-span-7 bg-white rounded-3xl border border-slate-200/90 p-6 shadow-2xs">
+        <div className="lg:col-span-7 bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm">
           <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
             <div>
               <h3 className="font-extrabold text-base text-slate-900 font-heading">
@@ -267,7 +257,7 @@ export const DashboardHome: React.FC = () => {
         {/* Right Column: Low Stock Alerts & Quick Actions */}
         <div className="lg:col-span-5 space-y-6">
           {/* Low Stock Alert Box */}
-          <div className="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-2xs space-y-4">
+          <div className="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-sm space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4 text-amber-600" />
@@ -318,7 +308,7 @@ export const DashboardHome: React.FC = () => {
           </div>
 
           {/* Quick Shortcuts */}
-          <div className="bg-slate-900 text-white rounded-3xl p-6 shadow-md space-y-4">
+          <div className="bg-slate-900 text-white rounded-2xl p-6 shadow-md space-y-4">
             <h4 className="font-extrabold text-sm font-heading text-white">
               Pintasan Cepat Operasional
             </h4>
