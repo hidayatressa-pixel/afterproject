@@ -8,12 +8,18 @@ export const AdminLoginModal: React.FC = () => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   if (!isAdminLoginOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    login(username, password);
+    setSubmitting(true);
+    try {
+      await login(username, password);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -68,9 +74,10 @@ export const AdminLoginModal: React.FC = () => {
 
             <button
               type="submit"
+              disabled={submitting}
               className="w-full py-3 rounded-2xl bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all"
             >
-              <span>Masuk ke Dashboard</span>
+              <span>{submitting ? 'Memverifikasi...' : 'Masuk ke Dashboard'}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>
