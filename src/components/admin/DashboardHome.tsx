@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { TrendingUp, DollarSign, ShoppingCart, AlertTriangle, Package, Printer, Receipt, Wallet } from 'lucide-react';
 import { EmptyState } from '../common/EmptyState';
+import { useApp } from '../../context/AppContext';
 
 export const DashboardHome: React.FC = () => {
   const {
