@@ -6,14 +6,8 @@ import {
   ShoppingCart,
   AlertTriangle,
   Package,
-  ArrowDownRight,
-  ArrowUpRight,
-  Clock,
   Printer,
-  ChevronRight,
-  Plus,
   Receipt,
-  Sparkles,
   Wallet,
 } from 'lucide-react';
 import { EmptyState } from '../common/EmptyState';
@@ -26,8 +20,6 @@ export const DashboardHome: React.FC = () => {
     expenses,
     setAdminTab,
     setActiveReceiptSale,
-    loadDemoData,
-    isDemoMode,
   } = useApp();
 
   // Calculate Metrics
@@ -215,11 +207,9 @@ export const DashboardHome: React.FC = () => {
                 id="empty-recent-sales"
                 icon={<Receipt className="w-6 h-6" />}
                 title="Belum ada transaksi hari ini."
-                description="Database penjualan masih kosong. Anda dapat mencoba transaksi pertama di menu Kasir atau mengaktifkan data simulasi demo."
+                description="Belum ada transaksi. Mulai transaksi pertama dari menu Kasir."
                 actionText="Buka Kasir (POS)"
                 onAction={() => setAdminTab('pos')}
-                secondaryActionText={!isDemoMode ? 'Muat Data Demo' : undefined}
-                onSecondaryAction={loadDemoData}
               />
             </div>
           ) : (
