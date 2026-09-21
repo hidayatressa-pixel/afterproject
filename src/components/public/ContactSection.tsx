@@ -14,10 +14,10 @@ import { useApp } from '../../context/AppContext';
 export const ContactSection: React.FC = () => {
   const { websiteContent, settings, addToast } = useApp();
 
-  const activeWhatsApp = settings?.whatsapp || websiteContent?.whatsapp_number || '081234567890';
-  const activePhone = settings?.phone || websiteContent?.phone_number || '0812-3456-7890';
-  const activeAddress = settings?.address || websiteContent?.address || 'Jl. Raya Utama No. 45';
-  const activeStoreName = settings?.store_name || 'AFTER PROJECT';
+  const activeWhatsApp = settings.whatsapp || websiteContent.whatsapp_number || '';
+  const activePhone = settings.phone || websiteContent.phone_number || '';
+  const activeAddress = settings.address || websiteContent.address || '';
+  const activeStoreName = settings.store_name || 'AFTER PROJECT';
 
   const [formName, setFormName] = useState('');
   const [formPhone, setFormPhone] = useState('');
@@ -146,7 +146,7 @@ export const ContactSection: React.FC = () => {
                   AFTER PROJECT
                 </p>
                 <p className="text-[11px] text-slate-500 max-w-xs mt-0.5">
-                  {websiteContent.address}, {websiteContent.city}
+                  {activeAddress}{websiteContent.city ? `, ${websiteContent.city}` : ''}
                 </p>
                 <span className="mt-2 text-[10px] bg-white/90 px-3 py-1 rounded-full text-slate-700 font-mono shadow-2xs">
                   Area Strategis & Mudah Ditemukan
