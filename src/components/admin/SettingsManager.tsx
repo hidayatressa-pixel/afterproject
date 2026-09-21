@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useApp } from '../../context/AppContext';
 import { Save, Printer, ShieldCheck, CreditCard, Globe, ExternalLink, MessageCircle, MapPin, Phone, CheckCircle2 } from 'lucide-react';
 
 export const SettingsManager: React.FC = () => {
