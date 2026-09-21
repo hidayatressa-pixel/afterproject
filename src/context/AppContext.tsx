@@ -2,6 +2,8 @@ import React, { createContext, useContext, useState, useEffect, useCallback } fr
 import { dbRepository } from '../services/db';
 import { firestore } from '../services/firebase';
 import { doc, onSnapshot, setDoc } from 'firebase/firestore';
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { firebaseAuth } from '../services/firebase';
 import {
   Product,
   Category,
@@ -52,7 +54,7 @@ interface AppContextType {
   currentUser: User | null;
   isAdminLoginOpen: boolean;
   setIsAdminLoginOpen: (open: boolean) => void;
-  login: (username: string, pinOrPass: string) => boolean;
+  login: (username: string, pinOrPass: string) => Promise<boolean>;
   logout: () => void;
 
   // Mode
@@ -200,33 +202,50 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
   }, [refreshData]);
 
-  // Auth handler
-  const login = (username: string, pinOrPass: string): boolean => {
+  // Firebase Auth session + role mapping.
+  useEffect(() => {
+    return onAuthStateChanged(firebaseAuth, (authUser) => {
+      if (!authUser) {
+        setCurrentUser(null);
+        return;
+      }
+      const username = (authUser.email || '').split('@')[0].toLowerCase();
+      const profile = users.find((u) => u.username.toLowerCase() === username && u.active);
+      if (profile) setCurrentUser(profile);
+    });
+  }, [users]);
+
+  // Admin/cashier usernames map to Firebase Auth emails: <username>@afterproject.local.
+  const login = async (username: string, pinOrPass: string): Promise<boolean> => {
     const normalizedUsername = username.trim().toLowerCase();
     const foundUser = users.find(
       (u) => u.username.toLowerCase() === normalizedUsername && u.active
     );
+    if (!foundUser) {
+      addToast('error', 'Login Gagal', 'Akun tidak aktif atau tidak ditemukan.');
+      return false;
+    }
 
-    // Prototype credentials are intentionally explicit per account.
-    // Replace this with server-side/Firebase/Supabase authentication before public production use.
-    const validPrototypeCredential =
-      (normalizedUsername === 'admin' && pinOrPass === 'admin123') ||
-      (normalizedUsername === 'kasir' && pinOrPass === 'kasir123');
-
-    if (foundUser && validPrototypeCredential) {
+    try {
+      await signInWithEmailAndPassword(
+        firebaseAuth,
+        `${normalizedUsername}@afterproject.local`,
+        pinOrPass
+      );
       setCurrentUser(foundUser);
       setIsAdminLoginOpen(false);
       setAdminTab(foundUser.role === 'cashier' ? 'pos' : 'dashboard');
       setCurrentView('admin');
       addToast('success', 'Berhasil Masuk', `Selamat datang, ${foundUser.name}`);
       return true;
+    } catch {
+      addToast('error', 'Login Gagal', 'Username atau password salah.');
+      return false;
     }
-
-    addToast('error', 'Login Gagal', 'Username atau password salah.');
-    return false;
   };
 
   const logout = () => {
+    signOut(firebaseAuth).catch(console.error);
     setCurrentUser(null);
     setCurrentView('public');
     addToast('info', 'Telah Keluar', 'Sesi admin ditutup.');
