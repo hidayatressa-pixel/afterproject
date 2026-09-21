@@ -1,15 +1,5 @@
 import React, { useState } from 'react';
-import { useApp } from '../../context/AppContext';
-import {
-  Printer,
-  Menu,
-  X,
-  MessageCircle,
-  Lock,
-  ChevronRight,
-  Sparkles,
-  Phone,
-} from 'lucide-react';
+import { Menu, X, MessageCircle, Lock, ChevronRight } from 'lucide-react';
 import { BrandLogo } from '../common/BrandLogo';
 
 export const Navbar: React.FC = () => {
@@ -19,11 +9,10 @@ export const Navbar: React.FC = () => {
   const navLinks = [
     { label: 'Beranda', href: '#beranda' },
     { label: 'Layanan', href: '#layanan' },
-    { label: 'ATK', href: '#katalog-atk' },
-    { label: 'Printing', href: '#kirim-file' },
+    { label: 'Produk', href: '#katalog-atk' },
+    { label: 'Kirim File', href: '#kirim-file' },
     { label: 'Harga', href: '#daftar-harga' },
-    { label: 'Tentang Kami', href: '#tentang' },
-    { label: 'Digital Solutions', href: '#digital-solutions' },
+    { label: 'Solusi Digital', href: '#digital-solutions' },
     { label: 'Kontak', href: '#kontak' },
   ];
 
@@ -54,7 +43,7 @@ export const Navbar: React.FC = () => {
 
       {/* Main Navbar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-16">
           {/* Brand Logo */}
           <a href="#beranda" className="group shrink-0">
             <BrandLogo size="md" variant="dark" showSubtitle={true} />
@@ -66,7 +55,7 @@ export const Navbar: React.FC = () => {
               <a
                 key={link.href}
                 href={link.href}
-                className="px-3 py-2 text-sm font-semibold text-slate-600 hover:text-amber-600 rounded-lg hover:bg-amber-50/70 transition-colors"
+                className="px-3 py-2 text-sm font-semibold text-slate-600 hover:text-slate-950 rounded-xl hover:bg-slate-100 transition-colors"
               >
                 {link.label}
               </a>
@@ -98,7 +87,7 @@ export const Navbar: React.FC = () => {
             {/* Primary WhatsApp CTA */}
             <button
               onClick={handleWhatsApp}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white text-sm font-bold shadow-xs hover:shadow-sm transition-all"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 active:bg-black text-white text-sm font-bold shadow-xs hover:shadow-sm transition-all"
             >
               <MessageCircle className="w-4 h-4" />
               <span>Hubungi WhatsApp</span>
