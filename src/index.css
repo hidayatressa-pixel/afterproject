@@ -1,22 +1,40 @@
 @import "tailwindcss";
 
 @layer base {
+  html { scroll-behavior: smooth; }
   body {
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    min-width: 320px;
+    background: #f8fafc;
+    color: #0f172a;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    text-rendering: optimizeLegibility;
   }
-
   h1, h2, h3, .font-heading {
-    font-family: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+  button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+  button, a { outline-offset: 3px; }
+}
+
+@layer utilities {
+  .app-surface { @apply bg-white border border-slate-200 rounded-2xl; }
+  .app-card { @apply bg-white border border-slate-200 rounded-2xl shadow-sm; }
+  .app-input { @apply rounded-xl border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-500; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
   }
 }
 
 @media print {
-  body * {
-    visibility: hidden;
-  }
-  #printable-receipt, #printable-receipt * {
-    visibility: visible;
-  }
+  body * { visibility: hidden; }
+  #printable-receipt, #printable-receipt * { visibility: visible; }
   #printable-receipt {
     position: absolute;
     left: 0;
@@ -25,7 +43,5 @@
     margin: 0;
     padding: 0;
   }
-  .no-print {
-    display: none !important;
-  }
+  .no-print { display: none !important; }
 }
