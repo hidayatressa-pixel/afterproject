@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Menu, X, MessageCircle, Lock, ChevronRight } from 'lucide-react';
 import { BrandLogo } from '../common/BrandLogo';
+import { useApp } from '../../context/AppContext';
 
 export const Navbar: React.FC = () => {
   const { websiteContent, settings, setIsAdminLoginOpen, currentUser, setCurrentView } = useApp();
