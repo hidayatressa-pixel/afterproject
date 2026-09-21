@@ -15,7 +15,7 @@ import { useApp } from '../../context/AppContext';
 export const QuickOrder: React.FC = () => {
   const { websiteContent, settings } = useApp();
 
-  const activeWhatsApp = settings?.whatsapp || websiteContent?.whatsapp_number || '081234567890';
+  const activeWhatsApp = settings.whatsapp || websiteContent.whatsapp_number || '';
 
   // Interactive Quick Order Estimator
   const [docType, setDocType] = useState('Dokumen Tugas / Makalah');
@@ -298,7 +298,7 @@ export const QuickOrder: React.FC = () => {
                 <div className="flex items-center justify-between text-slate-300">
                   <span>Nomor WhatsApp:</span>
                   <span className="font-mono font-bold text-amber-300">
-                    {websiteContent.phone_number || '0812-3456-7890'}
+                    {settings.phone || websiteContent.phone_number || '-'}
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-slate-300">
