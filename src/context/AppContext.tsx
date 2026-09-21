@@ -178,33 +178,27 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Auth handler
   const login = (username: string, pinOrPass: string): boolean => {
-    // Standard secure pin / pass check for demo and management
+    const normalizedUsername = username.trim().toLowerCase();
     const foundUser = users.find(
-      (u) => u.username.toLowerCase() === username.trim().toLowerCase() && u.active
+      (u) => u.username.toLowerCase() === normalizedUsername && u.active
     );
 
-    // Accept default admin / admin123 or pin 1234
-    if (
-      (username.trim().toLowerCase() === 'admin' && (pinOrPass === 'admin123' || pinOrPass === '1234')) ||
-      (username.trim().toLowerCase() === 'kasir' && (pinOrPass === 'kasir123' || pinOrPass === '1234')) ||
-      (foundUser && (pinOrPass === 'admin123' || pinOrPass === '1234'))
-    ) {
-      const user = foundUser || {
-        id: 'usr-1',
-        username: username.toLowerCase(),
-        name: username.toLowerCase() === 'admin' ? 'Owner / Admin Toko' : 'Operator Kasir',
-        role: username.toLowerCase() === 'admin' ? 'admin' : 'cashier',
-        active: true,
-        created_at: new Date().toISOString(),
-      };
-      setCurrentUser(user);
+    // Prototype credentials are intentionally explicit per account.
+    // Replace this with server-side/Firebase/Supabase authentication before public production use.
+    const validPrototypeCredential =
+      (normalizedUsername === 'admin' && pinOrPass === 'admin123') ||
+      (normalizedUsername === 'kasir' && pinOrPass === 'kasir123');
+
+    if (foundUser && validPrototypeCredential) {
+      setCurrentUser(foundUser);
       setIsAdminLoginOpen(false);
+      setAdminTab(foundUser.role === 'cashier' ? 'pos' : 'dashboard');
       setCurrentView('admin');
-      addToast('success', 'Berhasil Masuk', `Selamat datang, ${user.name}`);
+      addToast('success', 'Berhasil Masuk', `Selamat datang, ${foundUser.name}`);
       return true;
     }
 
-    addToast('error', 'Login Gagal', 'Username atau PIN/Password salah (Coba: admin / admin123 atau PIN: 1234)');
+    addToast('error', 'Login Gagal', 'Username atau password salah.');
     return false;
   };
 
