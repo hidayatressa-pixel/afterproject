@@ -171,7 +171,7 @@ export const InventoryManager: React.FC = () => {
                   <th className="py-3.5 px-4 text-center">Stok Fisik Saat Ini</th>
                   <th className="py-3.5 px-4 text-center">Batas Minimum</th>
                   <th className="py-3.5 px-4 text-center">Status Inventori</th>
-                  <th className="py-3.5 px-4 text-center">Gambar & Mutasi</th>
+                  <th className="py-3.5 px-4 text-center">Aksi</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
@@ -222,25 +222,27 @@ export const InventoryManager: React.FC = () => {
                           </span>
                         )}
                       </td>
-                      <td className="py-3.5 px-4 text-center">
-                        <div className="flex items-center justify-center gap-2 flex-wrap">
-                          <button type="button" onClick={() => { setImageProduct(p); setImagePreview(p.image || ''); }} className="px-2.5 py-1 rounded-xl bg-blue-50 hover:bg-blue-600 hover:text-white text-blue-700 font-bold text-[11px] border border-blue-200 transition-colors flex items-center gap-1">
-                            <ImagePlus className="w-3 h-3" /><span>Gambar</span>
+                      <td className="py-3.5 px-4">
+                        <div className="grid grid-cols-3 gap-1.5 min-w-[300px]">
+                          <button type="button" title="Kelola gambar produk" onClick={() => { setImageProduct(p); setImagePreview(p.image || ''); }} className="h-8 px-2 rounded-lg bg-white hover:bg-blue-50 text-blue-700 font-bold text-[10px] border border-slate-200 transition-colors inline-flex items-center justify-center gap-1">
+                            <ImagePlus className="w-3.5 h-3.5" /><span>Gambar</span>
                           </button>
                           <button
                             type="button"
+                            title="Tambah stok masuk"
                             onClick={() => handleOpenAdjustment(p, 'STOCK_IN')}
-                            className="px-2.5 py-1 rounded-xl bg-emerald-50 hover:bg-emerald-600 hover:text-white text-emerald-700 font-bold text-[11px] border border-emerald-200 transition-colors flex items-center gap-1"
+                            className="h-8 px-2 rounded-lg bg-white hover:bg-emerald-50 text-emerald-700 font-bold text-[10px] border border-slate-200 transition-colors inline-flex items-center justify-center gap-1"
                           >
-                            <Plus className="w-3 h-3" />
-                            <span>Restock Masuk</span>
+                            <Plus className="w-3.5 h-3.5" />
+                            <span>Restock</span>
                           </button>
                           <button
                             type="button"
+                            title="Koreksi stok atau catat barang rusak"
                             onClick={() => handleOpenAdjustment(p, 'ADJUSTMENT')}
-                            className="px-2.5 py-1 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[11px] border border-slate-200 transition-colors"
+                            className="h-8 px-2 rounded-lg bg-white hover:bg-slate-100 text-slate-700 font-bold text-[10px] border border-slate-200 transition-colors inline-flex items-center justify-center"
                           >
-                            Koreksi / Rusak
+                            Koreksi
                           </button>
                         </div>
                       </td>
