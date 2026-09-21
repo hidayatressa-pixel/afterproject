@@ -18,7 +18,7 @@ import { Product } from '../../types';
 import { EmptyState } from '../common/EmptyState';
 
 export const ProductManager: React.FC = () => {
-  const { products, categories, saveProduct, archiveProduct, restoreProduct, addToast, loadDemoData, isDemoMode } = useApp();
+  const { products, categories, saveProduct, archiveProduct, restoreProduct, addToast } = useApp();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
