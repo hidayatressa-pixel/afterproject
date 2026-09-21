@@ -12,8 +12,16 @@ const envConfig = {
 
 const firebaseConfig = envConfig;
 
-if (!Object.values(firebaseConfig).every(Boolean)) {
-  console.warn('Firebase configuration is incomplete. Configure VITE_FIREBASE_* repository variables.');
+const requiredFirebaseConfig = [
+  firebaseConfig.apiKey,
+  firebaseConfig.authDomain,
+  firebaseConfig.projectId,
+  firebaseConfig.messagingSenderId,
+  firebaseConfig.appId,
+];
+
+if (!requiredFirebaseConfig.every(Boolean)) {
+  console.warn('Firebase configuration is incomplete. Configure the required VITE_FIREBASE_* repository variables.');
 }
 
 export const firebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
@@ -27,4 +35,4 @@ export const firestore = (() => {
   }
 })();
 export const firebaseAuth = getAuth(firebaseApp);
-export const isFirebaseConfigured = Object.values(firebaseConfig).every(Boolean);
+export const isFirebaseConfigured = requiredFirebaseConfig.every(Boolean);
