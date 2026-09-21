@@ -46,14 +46,14 @@ export const AdminLoginModal: React.FC = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block font-bold text-slate-700 uppercase tracking-wider mb-1">
-                Username / ID Petugas
+                Username / Email Internal
               </label>
               <input
                 type="text"
                 required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="admin / kasir"
+                placeholder="admin / kasir / admin@afterproject.local"
                 className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none"
               />
             </div>
