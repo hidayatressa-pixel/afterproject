@@ -13,7 +13,7 @@ import {
 import { BrandLogo } from '../common/BrandLogo';
 
 export const Navbar: React.FC = () => {
-  const { websiteContent, settings, setIsAdminLoginOpen, currentUser, setCurrentView, isDemoMode, toggleDemoMode } = useApp();
+  const { websiteContent, settings, setIsAdminLoginOpen, currentUser, setCurrentView } = useApp();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navLinks = [
@@ -75,23 +75,6 @@ export const Navbar: React.FC = () => {
 
           {/* Right Action Buttons */}
           <div className="hidden sm:flex items-center gap-2.5">
-            {/* Demo mode pill toggle */}
-            <button
-              onClick={toggleDemoMode}
-              title="Klik untuk beralih mode data Demo / Production"
-              className={`px-2.5 py-1 text-[11px] font-bold rounded-lg border flex items-center gap-1.5 transition-colors ${
-                isDemoMode
-                  ? 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100'
-                  : 'bg-slate-100 text-slate-600 border-slate-300 hover:bg-slate-200'
-              }`}
-            >
-              <span
-                className={`w-2 h-2 rounded-full ${
-                  isDemoMode ? 'bg-emerald-500 animate-pulse' : 'bg-slate-400'
-                }`}
-              />
-              {isDemoMode ? 'Demo Data' : 'Clean / Empty'}
-            </button>
 
             {/* Admin trigger */}
             {currentUser ? (
@@ -185,13 +168,6 @@ export const Navbar: React.FC = () => {
               >
                 <Lock className="w-4 h-4 text-amber-600" />
                 {currentUser ? 'Masuk Dashboard POS' : 'Login Kasir / Admin'}
-              </button>
-
-              <button
-                onClick={toggleDemoMode}
-                className="text-[11px] font-semibold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg border"
-              >
-                Mode: {isDemoMode ? '🟢 Demo' : '⚪ Kosong'}
               </button>
             </div>
           </div>
